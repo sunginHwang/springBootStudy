@@ -12,5 +12,8 @@ public class FixedDepositMrhServiceImpl extends AbstructMrhService{
         return price;
     }
 
-
+    @Override
+    public String commonFunction() {
+        return super.commonFunction();
+    }
 }
