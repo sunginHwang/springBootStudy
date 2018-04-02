@@ -1,5 +1,6 @@
 package com.spring.studybyfirst.controller;
 
+import com.spring.studybyfirst.service.mrhService.MrhDbTestServiceImpl;
 import com.spring.studybyfirst.service.mrhService.impl.CustomCommonFunctionServiceImpl;
 import com.spring.studybyfirst.service.mrhService.impl.FixedDepositMrhServiceImpl;
 import com.spring.studybyfirst.service.mrhService.impl.SaveDepositMrhServiceImpl;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "tm")
-public class TMController {
+public class TMController  {
 
     @Autowired
     FixedDepositMrhServiceImpl fixedDepositMrhService;
@@ -20,6 +21,9 @@ public class TMController {
 
     @Autowired
     CustomCommonFunctionServiceImpl customCommonFunctionService;
+
+    @Autowired
+    MrhDbTestServiceImpl mrhDbTestService;
 
     final static int PRICE = 1000;
 
@@ -41,5 +45,16 @@ public class TMController {
     @GetMapping(value = "/custom/common")
     public String customCommonFunctionTest(){
         return customCommonFunctionService.commonFunction();
+    }
+
+    @GetMapping(value = "/db/test")
+    public String dbTest(){
+        String testValue = "";
+        try {
+            testValue = mrhDbTestService.dbTest();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return testValue;
     }
 }
