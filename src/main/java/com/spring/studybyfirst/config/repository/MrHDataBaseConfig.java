@@ -1,6 +1,7 @@
 package com.spring.studybyfirst.config.repository;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mariadb.jdbc.Driver;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,7 +13,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -39,13 +42,15 @@ public class MrHDataBaseConfig {
     @Bean(name="mrhDataSource")
     @Primary
     public DataSource mrhDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        System.out.println(url);
+        dataSource.setDriverClass(Driver.class);
+        dataSource.setUrl("jdbc:mysql://localhost:3306/mrH?useUnicode=true&characterEncoding=utf8");
+        dataSource.setUsername("root");
+        dataSource.setPassword("1111");
 
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUrl(url);
-        dataSource.setUsername(userName);
-        dataSource.setPassword(password);
-        return dataSource;    }
+        return dataSource;
+    }
 
     @Bean(name = "mrhSqlSessionFactory")
     @Primary
@@ -59,7 +64,7 @@ public class MrHDataBaseConfig {
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "mhSqlSessionTemplate")
+    @Bean(name = "mrhSqlSessionTemplate")
     @Primary
     public SqlSessionTemplate mrhSqlSessionTemplate(SqlSessionFactory mrhSqlSessionFactory) throws Exception{
         return new SqlSessionTemplate(mrhSqlSessionFactory);

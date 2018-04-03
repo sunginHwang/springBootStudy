@@ -1,6 +1,7 @@
 package com.spring.studybyfirst.config.repository;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mariadb.jdbc.Driver;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import sun.tools.java.Environment;
 
@@ -40,17 +42,19 @@ public class ReactBoardDateBaseConfig {
 
     @Bean(name="reactBoardDataSource")
     public DataSource reactBoardDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUrl(url);
-        dataSource.setUsername(userName);
-        dataSource.setPassword(password);
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        System.out.println(url);
+        dataSource.setDriverClass(Driver.class);
+        dataSource.setUrl("jdbc:mysql://localhost:3306/ReactBoard?useUnicode=true&characterEncoding=utf8");
+        dataSource.setUsername("root");
+        dataSource.setPassword("1111");
+
         return dataSource;
     }
 
     @Bean(name = "reactBoardSqlSessionFactory")
     public SqlSessionFactory reactBoardSqlSessionFactory(
-            @Qualifier("mrhDataSource") DataSource reactBoardDataSource,
+            @Qualifier("reactBoardDataSource") DataSource reactBoardDataSource,
             ApplicationContext applicationContext
     ) throws Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
