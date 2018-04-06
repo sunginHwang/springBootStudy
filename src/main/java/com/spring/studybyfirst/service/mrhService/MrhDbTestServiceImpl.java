@@ -20,8 +20,6 @@ public class MrhDbTestServiceImpl {
 
 
     public String dbTest() throws Exception {
-        System.out.println(url);
-        System.out.println(reactBoardDbMapper.now());
       return mrhDbMapper.now();
     }
 }
