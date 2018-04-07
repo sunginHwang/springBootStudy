@@ -1,5 +1,7 @@
 package com.spring.studybyfirst.controller;
 
+import com.google.gson.reflect.TypeToken;
+import com.spring.studybyfirst.common.util.DataUtil;
 import com.spring.studybyfirst.config.annotation.CommonLog;
 import com.spring.studybyfirst.model.reactBoard.OhBoard;
 import com.spring.studybyfirst.service.mrhService.ReactBoardServiceImpl;
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Log4j2
@@ -29,9 +34,25 @@ public class BoardController {
 
     @GetMapping(value = "/getBoard")
     @ApiOperation(value = "게시판 리스트")
-    public String getBoardList(){
+    public List<OhBoard> getBoardList(){
         try {
-            return reactBoardService.getBoardList().toString();
+            List<OhBoard> boardList = reactBoardService.getBoardList();
+            return boardList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(value = "/getBoardJson")
+    @ApiOperation(value = "게시판 리스트")
+    public List<OhBoard> getBoardListForJson(){
+        try {
+            List<OhBoard> boardList = reactBoardService.getBoardList();
+            String jsonBoardList = DataUtil.toJson(boardList);
+            List<OhBoard> parseBoardList = DataUtil.fromJsonList(jsonBoardList,new TypeToken<List<OhBoard>>(){});
+            parseBoardList.stream().map(k -> {k.setContent("non");return k;}).collect(Collectors.toList());
+            return parseBoardList;
         } catch (Exception e) {
             e.printStackTrace();
         }
