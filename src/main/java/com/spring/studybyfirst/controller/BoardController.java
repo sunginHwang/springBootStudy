@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -53,6 +54,18 @@ public class BoardController {
             List<OhBoard> parseBoardList = DataUtil.fromJsonList(jsonBoardList,new TypeToken<List<OhBoard>>(){});
             parseBoardList.stream().map(k -> {k.setContent("non");return k;}).collect(Collectors.toList());
             return parseBoardList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(value = "/getBoardByBoardKey")
+    @ApiOperation(value = "게시글")
+    public OhBoard getBoard(@RequestParam Integer boardKey){
+        try {
+            OhBoard board = reactBoardService.getBoard(boardKey);
+            return board;
         } catch (Exception e) {
             e.printStackTrace();
         }

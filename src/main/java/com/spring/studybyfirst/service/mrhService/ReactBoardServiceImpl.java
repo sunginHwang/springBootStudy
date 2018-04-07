@@ -16,4 +16,8 @@ public class ReactBoardServiceImpl {
     public List<OhBoard> getBoardList() throws Exception {
         return reactBoardDbMapper.getBoardList();
     }
+
+    public OhBoard getBoard(Integer boardKey) throws Exception {
+        return reactBoardDbMapper.getBoard(boardKey);
+    }
 }
