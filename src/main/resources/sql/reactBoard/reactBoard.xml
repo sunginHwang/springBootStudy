@@ -4,4 +4,12 @@
     <select id="now" resultType="string">
         SELECT NOW()
     </select>
+
+    <select id="getBoardList" resultType="com.spring.studybyfirst.model.reactBoard.OhBoard">
+        SELECT board_key as boardKey, title, content, regi_date as regiDate,
+                update_date as updateDate, flag, member_key as memberKey,
+                 board_sub_img as boardSubImg, code_key as codeKey, category_key as categoryKey, hits
+        FROM OhBoard
+    </select>
+
 </mapper>
