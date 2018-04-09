@@ -3,8 +3,11 @@ package com.spring.studybyfirst.controller;
 import com.google.gson.reflect.TypeToken;
 import com.spring.studybyfirst.common.util.DataUtil;
 import com.spring.studybyfirst.config.annotation.CommonLog;
+import com.spring.studybyfirst.model.reactBoard.IBoard;
 import com.spring.studybyfirst.model.reactBoard.OhBoard;
 import com.spring.studybyfirst.service.mrhService.ReactBoardServiceImpl;
+import com.spring.studybyfirst.service.ohBoardService.boardInterfaceTestService.impl.FirstOhBoardServiceImpl;
+import com.spring.studybyfirst.service.ohBoardService.boardInterfaceTestService.impl.SecondOhBoardServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,12 @@ public class BoardController {
 
     @Autowired
     ReactBoardServiceImpl reactBoardService;
+
+    @Autowired
+    FirstOhBoardServiceImpl firstOhBoardService;
+
+    @Autowired
+    SecondOhBoardServiceImpl secondOhBoardService;
 
 
     @GetMapping(value = "/test")
@@ -85,6 +94,20 @@ public class BoardController {
             log.error("error region : {}",e.toString());
         }
         return "success";
+    }
+
+    @GetMapping(value = "/boards/nontitle")
+    @ApiOperation(value = "VO 인터페이스 테스트 NonTitle")
+    public List<IBoard> getBoardListNotTitle() throws Exception {
+
+      return secondOhBoardService.getBoardListTest();
+    }
+
+    @GetMapping(value = "/boards/nonContent")
+    @ApiOperation(value = "VO 인터페이스 테스트 NonContent")
+    public List<IBoard> getBoardListNotContent() throws Exception {
+
+        return firstOhBoardService.getBoardListTest();
     }
 
 }

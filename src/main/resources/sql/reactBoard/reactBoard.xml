@@ -5,19 +5,34 @@
         SELECT NOW()
     </select>
 
+    <sql id="boardCols">
+       board_key as boardKey, title, content, regi_date as regiDate,
+       update_date as updateDate, flag, member_key as memberKey,
+       board_sub_img as boardSubImg, code_key as codeKey, category_key as categoryKey, hits
+    </sql>
+
     <select id="getBoardList" resultType="com.spring.studybyfirst.model.reactBoard.OhBoard">
-        SELECT board_key as boardKey, title, content, regi_date as regiDate,
-                update_date as updateDate, flag, member_key as memberKey,
-                 board_sub_img as boardSubImg, code_key as codeKey, category_key as categoryKey, hits
+        SELECT
+             <include refid="boardCols"/>
         FROM OhBoard
     </select>
 
     <select id="getBoard" resultType="com.spring.studybyfirst.model.reactBoard.OhBoard">
-        SELECT board_key as boardKey, title, content, regi_date as regiDate,
-        update_date as updateDate, flag, member_key as memberKey,
-        board_sub_img as boardSubImg, code_key as codeKey, category_key as categoryKey, hits
+        SELECT
+        <include refid="boardCols"/>
         FROM OhBoard
-        WHERE board_key = #{boardKey}
+    </select>
+
+    <select id="getIBoardListNotContent" resultType="com.spring.studybyfirst.model.reactBoard.OhBoardNonContent">
+        SELECT
+        <include refid="boardCols"/>
+        FROM OhBoard
+    </select>
+
+    <select id="getIBoardListNotTitle" resultType="com.spring.studybyfirst.model.reactBoard.OhBoardNonTitle">
+        SELECT
+        <include refid="boardCols"/>
+        FROM OhBoard
     </select>
 
 </mapper>
