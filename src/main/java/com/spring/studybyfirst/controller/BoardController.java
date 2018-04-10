@@ -3,6 +3,7 @@ package com.spring.studybyfirst.controller;
 import com.google.gson.reflect.TypeToken;
 import com.spring.studybyfirst.common.util.DataUtil;
 import com.spring.studybyfirst.config.annotation.CommonLog;
+import com.spring.studybyfirst.exception.exceptions.BoardNotFoundException;
 import com.spring.studybyfirst.model.reactBoard.IBoard;
 import com.spring.studybyfirst.model.reactBoard.OhBoard;
 import com.spring.studybyfirst.service.mrhService.ReactBoardServiceImpl;
@@ -11,6 +12,7 @@ import com.spring.studybyfirst.service.ohBoardService.boardInterfaceTestService.
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,14 +73,15 @@ public class BoardController {
 
     @GetMapping(value = "/getBoardByBoardKey")
     @ApiOperation(value = "게시글")
-    public OhBoard getBoard(@RequestParam Integer boardKey){
-        try {
-            OhBoard board = reactBoardService.getBoard(boardKey);
-            return board;
-        } catch (Exception e) {
-            e.printStackTrace();
+    public OhBoard getBoard(@RequestParam Integer boardKey) throws Exception {
+
+        OhBoard board = reactBoardService.getBoard(boardKey);
+
+        if(ObjectUtils.isEmpty(board)){
+            throw new BoardNotFoundException("fe");
         }
-        return null;
+
+        return board;
     }
 
 

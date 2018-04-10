@@ -21,6 +21,7 @@
         SELECT
         <include refid="boardCols"/>
         FROM OhBoard
+        WHERE board_key = #{boardKey}
     </select>
 
     <select id="getIBoardListNotContent" resultType="com.spring.studybyfirst.model.reactBoard.OhBoardNonContent">

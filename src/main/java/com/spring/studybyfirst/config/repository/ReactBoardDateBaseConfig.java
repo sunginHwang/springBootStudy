@@ -44,9 +44,9 @@ public class ReactBoardDateBaseConfig {
     public DataSource reactBoardDataSource() throws ClassNotFoundException {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriverClass((Class<Driver>)Class.forName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"));
-        dataSource.setUrl("jdbc:log4jdbc:mysql://woolta.com:3306/ReactBoard?useUnicode=true&characterEncoding=utf8");
+        dataSource.setUrl("jdbc:log4jdbc:mysql://localhost:3306/ReactBoard?useUnicode=true&characterEncoding=utf8");
         dataSource.setUsername("root");
-        dataSource.setPassword("as455748");
+        dataSource.setPassword("1111");
 
         return dataSource;
     }

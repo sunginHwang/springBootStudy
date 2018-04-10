@@ -45,9 +45,9 @@ public class MrHDataBaseConfig {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         System.out.println(url);
         dataSource.setDriverClass(Driver.class);
-        dataSource.setUrl("jdbc:mysql://woolta.com:3306/mrH?useUnicode=true&characterEncoding=utf8");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/mrH?useUnicode=true&characterEncoding=utf8");
         dataSource.setUsername("root");
-        dataSource.setPassword("as455748");
+        dataSource.setPassword("1111");
 
         return dataSource;
     }
