@@ -2,12 +2,13 @@ package com.spring.studybyfirst.model.reactBoard;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.spring.studybyfirst.model.JsonModel;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class OhBoard {
+public class OhBoard extends JsonModel{
 
     private Integer boardKey;
     private String title;

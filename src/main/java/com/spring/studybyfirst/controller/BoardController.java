@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,8 +82,12 @@ public class BoardController {
             throw new BoardNotFoundException("fe");
         }
 
+        log.info("board Info : {}",board.toString());
+
         return board;
     }
+
+
 
 
     @GetMapping(value = "/logTest")
