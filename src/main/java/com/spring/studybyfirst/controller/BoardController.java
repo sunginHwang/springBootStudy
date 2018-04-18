@@ -13,10 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sun.rmi.runtime.Log;
 
 import java.util.List;
@@ -26,7 +23,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @CommonLog
 @RestController
-@RequestMapping(value = "board")
+@RequestMapping(value = "blog")
 public class BoardController {
 
     @Autowired
@@ -39,13 +36,8 @@ public class BoardController {
     SecondOhBoardServiceImpl secondOhBoardService;
 
 
-    @GetMapping(value = "/test")
-    @ApiOperation(value = "테스트용")
-    public String boardTest(){
-        return "Test";
-    }
 
-    @GetMapping(value = "/getBoard")
+    @GetMapping(value = "/boards")
     @ApiOperation(value = "게시판 리스트")
     public List<OhBoard> getBoardList(){
         try {
@@ -57,24 +49,26 @@ public class BoardController {
         return null;
     }
 
-    @GetMapping(value = "/getBoardJson")
+    @GetMapping(value = "/boards/NonContent")
     @ApiOperation(value = "게시판 리스트")
-    public List<OhBoard> getBoardListForJson(){
+    public List<OhBoard> getBoardListNonContent(){
         try {
             List<OhBoard> boardList = reactBoardService.getBoardList();
-            String jsonBoardList = DataUtil.toJson(boardList);
-            List<OhBoard> parseBoardList = DataUtil.fromJsonList(jsonBoardList,new TypeToken<List<OhBoard>>(){});
-            parseBoardList.stream().map(k -> {k.setContent("non");return k;}).collect(Collectors.toList());
-            return parseBoardList;
+            boardList.stream()
+                     .map(k -> {k.setContent("");return k;})
+                     .collect(Collectors.toList());
+
+            return boardList;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @GetMapping(value = "/getBoardByBoardKey")
+
+    @GetMapping(value = "/board/{boardKey}")
     @ApiOperation(value = "게시글")
-    public OhBoard getBoard(@RequestParam Integer boardKey) throws Exception {
+    public OhBoard getBoard(@PathVariable Integer boardKey) throws Exception {
 
         OhBoard board = reactBoardService.getBoard(boardKey);
 
@@ -85,37 +79,6 @@ public class BoardController {
         log.info("board Info : {}",board.toString());
 
         return board;
-    }
-
-
-
-
-    @GetMapping(value = "/logTest")
-    @ApiOperation(value = "로그테스트용")
-    public String log4jTest(){
-
-        try {
-            log.debug("log debug Test Access {}","HelloWorld");
-            log.info("log info Test Access {}","HelloWorld");
-            throw new Exception();
-        }catch (Exception e){
-            log.error("error region : {}",e.toString());
-        }
-        return "success";
-    }
-
-    @GetMapping(value = "/boards/nontitle")
-    @ApiOperation(value = "VO 인터페이스 테스트 NonTitle")
-    public List<IBoard> getBoardListNotTitle() throws Exception {
-
-      return secondOhBoardService.getBoardListTest();
-    }
-
-    @GetMapping(value = "/boards/nonContent")
-    @ApiOperation(value = "VO 인터페이스 테스트 NonContent")
-    public List<IBoard> getBoardListNotContent() throws Exception {
-
-        return firstOhBoardService.getBoardListTest();
     }
 
 }
