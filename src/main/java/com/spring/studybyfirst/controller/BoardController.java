@@ -44,6 +44,7 @@ public class BoardController {
             List<OhBoard> boardList = reactBoardService.getBoardList();
             return boardList;
         } catch (Exception e) {
+            log.info("boardList error ");
             e.printStackTrace();
         }
         return null;
@@ -60,6 +61,7 @@ public class BoardController {
 
             return boardList;
         } catch (Exception e) {
+            log.info("boardList nonContent error ");
             e.printStackTrace();
         }
         return null;
@@ -73,6 +75,7 @@ public class BoardController {
         OhBoard board = reactBoardService.getBoard(boardKey);
 
         if(ObjectUtils.isEmpty(board)){
+            log.info("board not found , boardKey : {}",boardKey);
             throw new BoardNotFoundException("fe");
         }
 
