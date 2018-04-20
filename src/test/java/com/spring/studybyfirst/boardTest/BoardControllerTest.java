@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -31,6 +32,9 @@ public class BoardControllerTest {
     @Autowired
     private SecondOhBoardServiceImpl secondOhBoardService;
 
+
+    @Value("${property.environment}")
+    private String environment;
 
 
     @Test
@@ -84,6 +88,16 @@ public class BoardControllerTest {
         }catch (Exception e){
             log.error("error region : {}",e.toString());
         }
+    }
+
+    @Test
+    public void 커스텀프로퍼티라이브테스트(){
+        Assert.assertEquals(environment, "live");
+    }
+
+    @Test
+    public void 커스텀프로퍼티개발테스트(){
+        Assert.assertEquals(environment, "dev");
     }
 
 }
