@@ -5,6 +5,7 @@ import com.spring.studybyfirst.common.util.DataUtil;
 import com.spring.studybyfirst.controller.BoardController;
 import com.spring.studybyfirst.model.reactBoard.IBoard;
 import com.spring.studybyfirst.model.reactBoard.OhBoard;
+import com.spring.studybyfirst.model.vo.NpeTestVO;
 import com.spring.studybyfirst.service.mrhService.ReactBoardServiceImpl;
 import com.spring.studybyfirst.service.ohBoardService.boardInterfaceTestService.impl.FirstOhBoardServiceImpl;
 import com.spring.studybyfirst.service.ohBoardService.boardInterfaceTestService.impl.SecondOhBoardServiceImpl;
@@ -20,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @TestPropertySource(properties = {"projectProfile=dev"})
@@ -124,6 +126,23 @@ public class BoardControllerTest {
             log.info(e);
         }
 
+
+    }
+
+    @Test
+    public void npe테스트(){
+        NpeTestVO npeTestVO = new NpeTestVO();
+        npeTestVO.setId("");
+        npeTestVO.setTitle("12");
+
+        try {
+            String propertyId = Optional.ofNullable(npeTestVO.getId())
+                                        .filter(id->!id.isEmpty())
+                                        .orElseThrow(IllegalAccessException::new);
+            System.out.println(propertyId);
+        } catch (IllegalAccessException e) {
+            log.info("log error :{}",DataUtil.toJson(npeTestVO));
+        }
 
     }
 

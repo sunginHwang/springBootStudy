@@ -2,7 +2,6 @@ package com.spring.studybyfirst.common.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.sun.xml.internal.bind.v2.model.core.TypeRef;
 
 import java.util.Map;
 import java.util.function.Function;

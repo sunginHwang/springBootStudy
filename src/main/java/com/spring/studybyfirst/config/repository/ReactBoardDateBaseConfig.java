@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import sun.tools.java.Environment;
 
 import javax.sql.DataSource;
 
